@@ -10,7 +10,7 @@ class InstallData implements InstallDataInterface
 {
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
-        if (version_compare($context->getVersion(), '0.0.2', '<')) {
+        if (version_compare($context->getVersion(), '0.0.1', '<')) {
             $setup->getConnection()->query("create table epuzzle_customer_price
                 (   item_id     smallint auto_increment comment 'Item ID'   primary key,
                     product_id  int unsigned                                not null comment 'Product ID',

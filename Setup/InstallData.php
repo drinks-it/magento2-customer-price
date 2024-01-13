@@ -11,7 +11,7 @@ class InstallData implements InstallDataInterface
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
         if (version_compare($context->getVersion(), '0.0.1', '<')) {
-            $setup->getConnection()->query("create table epuzzle_customer_price
+            $setup->getConnection()->query("create table if not exists epuzzle_customer_price
                 (   item_id     smallint auto_increment comment 'Item ID'   primary key,
                     product_id  int unsigned                                not null comment 'Product ID',
                     customer_id int unsigned                                not null comment 'Customer ID',
@@ -34,17 +34,17 @@ class InstallData implements InstallDataInterface
             );
 
             $setup->getConnection()->query("
-                    create index EPUZZLE_CUSTOMER_PRICE_CUSTOMER_ID
+                    create index if not exists EPUZZLE_CUSTOMER_PRICE_CUSTOMER_ID
                     on epuzzle_customer_price (customer_id);
             ");
 
             $setup->getConnection()->query("
-                    create index EPUZZLE_CUSTOMER_PRICE_PRODUCT_ID
+                    create index if not exists EPUZZLE_CUSTOMER_PRICE_PRODUCT_ID
                     on epuzzle_customer_price (product_id);
             ");
 
             $setup->getConnection()->query("
-                    create index EPUZZLE_CUSTOMER_PRICE_PRODUCT_ID_CUSTOMER_ID_QTY_WEBSITE_ID
+                    create index if not exists EPUZZLE_CUSTOMER_PRICE_PRODUCT_ID_CUSTOMER_ID_QTY_WEBSITE_ID
                     on epuzzle_customer_price (product_id, customer_id, qty, website_id);
             ");
         }

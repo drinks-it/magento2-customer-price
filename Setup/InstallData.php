@@ -30,17 +30,23 @@ class InstallData implements InstallDataInterface
                         foreign key (website_id) references store_website (website_id)
                             on delete cascade
                 )
-                comment 'Customer Price Table' charset = utf8;
-                
-                create index EPUZZLE_CUSTOMER_PRICE_CUSTOMER_ID
-                    on epuzzle_customer_price (customer_id);
-                
-                create index EPUZZLE_CUSTOMER_PRICE_PRODUCT_ID
-                    on epuzzle_customer_price (product_id);
-                
-                create index EPUZZLE_CUSTOMER_PRICE_PRODUCT_ID_CUSTOMER_ID_QTY_WEBSITE_ID
-                    on epuzzle_customer_price (product_id, customer_id, qty, website_id);"
+                comment 'Customer Price Table' charset = utf8;"
             );
+
+            $setup->getConnection()->query("
+                    create index EPUZZLE_CUSTOMER_PRICE_CUSTOMER_ID
+                    on epuzzle_customer_price (customer_id);
+            ");
+
+            $setup->getConnection()->query("
+                    create index EPUZZLE_CUSTOMER_PRICE_PRODUCT_ID
+                    on epuzzle_customer_price (product_id);
+            ");
+
+            $setup->getConnection()->query("
+                    create index EPUZZLE_CUSTOMER_PRICE_PRODUCT_ID_CUSTOMER_ID_QTY_WEBSITE_ID
+                    on epuzzle_customer_price (product_id, customer_id, qty, website_id);
+            ");
         }
     }
 }

@@ -34,18 +34,78 @@ class UpgradeData implements UpgradeDataInterface
             );
 
             $setup->getConnection()->query("
-                    create index if not exists EPUZZLE_CUSTOMER_PRICE_CUSTOMER_ID
-                    on epuzzle_customer_price (customer_id);
+                DELIMITER //
+                CREATE PROCEDURE CreateIndexIfNotExists()
+                BEGIN
+                    DECLARE indexCount INT;
+                
+                    SELECT COUNT(*)
+                    INTO indexCount
+                    FROM information_schema.statistics
+                    WHERE table_name = 'epuzzle_customer_price'
+                      AND index_name = 'EPUZZLE_CUSTOMER_PRICE_CUSTOMER_ID';
+                
+                    IF indexCount = 0 THEN
+                        SET @sql = 'CREATE INDEX EPUZZLE_CUSTOMER_PRICE_CUSTOMER_ID ON epuzzle_customer_price (customer_id)';
+                        PREPARE stmt FROM @sql;
+                        EXECUTE stmt;
+                        DEALLOCATE PREPARE stmt;
+                    END IF;
+                END //
+                DELIMITER ;
+                
+              CALL CreateIndexIfNotExists();  
+              DROP PROCEDURE IF EXISTS CreateIndexIfNotExists;
             ");
 
             $setup->getConnection()->query("
-                    create index if not exists EPUZZLE_CUSTOMER_PRICE_PRODUCT_ID
-                    on epuzzle_customer_price (product_id);
+                DELIMITER //
+                CREATE PROCEDURE CreateIndexIfNotExists()
+                BEGIN
+                    DECLARE indexCount INT;
+                
+                    SELECT COUNT(*)
+                    INTO indexCount
+                    FROM information_schema.statistics
+                    WHERE table_name = 'epuzzle_customer_price'
+                      AND index_name = 'EPUZZLE_CUSTOMER_PRICE_PRODUCT_ID';
+                
+                    IF indexCount = 0 THEN
+                        SET @sql = 'CREATE INDEX EPUZZLE_CUSTOMER_PRICE_PRODUCT_ID ON epuzzle_customer_price (product_id)';
+                        PREPARE stmt FROM @sql;
+                        EXECUTE stmt;
+                        DEALLOCATE PREPARE stmt;
+                    END IF;
+                END //
+                DELIMITER ;
+                
+              CALL CreateIndexIfNotExists();  
+              DROP PROCEDURE IF EXISTS CreateIndexIfNotExists;
             ");
 
             $setup->getConnection()->query("
-                    create index if not exists EPUZZLE_CUSTOMER_PRICE_PRODUCT_ID_CUSTOMER_ID_QTY_WEBSITE_ID
-                    on epuzzle_customer_price (product_id, customer_id, qty, website_id);
+                DELIMITER //
+                CREATE PROCEDURE CreateIndexIfNotExists()
+                BEGIN
+                    DECLARE indexCount INT;
+                
+                    SELECT COUNT(*)
+                    INTO indexCount
+                    FROM information_schema.statistics
+                    WHERE table_name = 'epuzzle_customer_price'
+                      AND index_name = 'EPUZZLE_CUSTOMER_PRICE_PRODUCT_ID_CUSTOMER_ID_QTY_WEBSITE_ID';
+                
+                    IF indexCount = 0 THEN
+                        SET @sql = 'CREATE INDEX EPUZZLE_CUSTOMER_PRICE_PRODUCT_ID_CUSTOMER_ID_QTY_WEBSITE_ID ON epuzzle_customer_price (product_id, customer_id, qty, website_id)';
+                        PREPARE stmt FROM @sql;
+                        EXECUTE stmt;
+                        DEALLOCATE PREPARE stmt;
+                    END IF;
+                END //
+                DELIMITER ;
+                
+              CALL CreateIndexIfNotExists();  
+              DROP PROCEDURE IF EXISTS CreateIndexIfNotExists;
             ");
         }
     }

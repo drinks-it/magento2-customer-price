@@ -52,10 +52,14 @@ class UpgradeData implements UpgradeDataInterface
                         DEALLOCATE PREPARE stmt;
                     END IF;
                 END //
-                DELIMITER ;
-                
-              CALL CreateIndexIfNotExists();  
-              DROP PROCEDURE IF EXISTS CreateIndexIfNotExists;
+                DELIMITER ; 
+            ");
+
+            $setup->getConnection()->query("
+                CALL CreateIndexIfNotExists();   
+            ");
+            $setup->getConnection()->query("
+                DROP PROCEDURE IF EXISTS CreateIndexIfNotExists;
             ");
 
             $setup->getConnection()->query("
@@ -78,9 +82,12 @@ class UpgradeData implements UpgradeDataInterface
                     END IF;
                 END //
                 DELIMITER ;
-                
-              CALL CreateIndexIfNotExists();  
-              DROP PROCEDURE IF EXISTS CreateIndexIfNotExists;
+            ");
+            $setup->getConnection()->query("
+                  CALL CreateIndexIfNotExists();  
+            ");
+            $setup->getConnection()->query("
+                 DROP PROCEDURE IF EXISTS CreateIndexIfNotExists;
             ");
 
             $setup->getConnection()->query("
@@ -102,10 +109,14 @@ class UpgradeData implements UpgradeDataInterface
                         DEALLOCATE PREPARE stmt;
                     END IF;
                 END //
-                DELIMITER ;
-                
-              CALL CreateIndexIfNotExists();  
-              DROP PROCEDURE IF EXISTS CreateIndexIfNotExists;
+                DELIMITER ;   
+            ");
+
+            $setup->getConnection()->query("
+               CALL CreateIndexIfNotExists();   
+            ");
+            $setup->getConnection()->query("
+                DROP PROCEDURE IF EXISTS CreateIndexIfNotExists;
             ");
         }
     }
